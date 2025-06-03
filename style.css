@@ -18,12 +18,11 @@ h1 {
   box-sizing: border-box;
   padding: 12px;
   border: 2px solid #2c8fbd;
-  border-radius: 6px;
+  border-radius: 15px;
   background: #e0f0fb;
   cursor: pointer;
   transition: background 0.3s, border-color 0.3s;
   user-select: none;
-
   width: 250px;
   height: 120px;
   display: flex;
@@ -122,7 +121,7 @@ img {
 }
 #summary-container {
   margin: 20px auto 40px;
-  max-width: 700px;
+  max-width: 500px;
   padding: 16px;
   border: 4px solid #2c8fbd;
   border-radius: 8px;
