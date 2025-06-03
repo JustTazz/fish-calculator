@@ -1,0 +1,115 @@
+body {
+  font-family: "Pixelify Sans", sans-serif;
+}
+#fish-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 1700px;
+  margin: 0 auto;
+  justify-content: flex-start;
+}
+
+.fish-button {
+  position: relative;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 2px solid #2c8fbd;
+  border-radius: 6px;
+  background: #e0f0fb;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+  user-select: none;
+
+  width: 250px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.fish-button:hover {
+  background: #a6d0f5;
+  border-color: #17639e;
+}
+.fish-button.selected {
+  background: #4caf50;
+  border-color: #357a38;
+  color: white;
+}
+.fish-name {
+  font-weight: 500;
+  font-size: 1.1em;
+  margin-bottom: 6px;
+}
+.fish-stats {
+  font-size: 0.9em;
+  color: #444;
+}
+.badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #e74c3c;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 0.9em;
+  user-select: none;
+  min-width: 20px;
+  text-align: center;
+}
+.count-badge {
+  min-width: 24px;
+  text-align: center;
+  font-weight: bold;
+  line-height: 24px;
+  border-radius: 12px;
+  background-color: #e74c3c;
+  color: white;
+  user-select: none;
+}
+.minus-btn,
+.plus-btn {
+  cursor: pointer;
+  border: 1px solid #888;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+.minus-btn:hover,
+.plus-btn:hover {
+  background-color: #ccc;
+}
+#result {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #e0f0fb;
+  padding: 10px 16px;
+  border: 2px solid #2c8fbd;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  z-index: 9999;
+  width: auto;
+  max-width: 200px;
+  font-size: 1.3em;
+}
+
+.shiny-image {
+  background-color: #ffeb3b;
+  border-radius: 6px;
+  padding: 3px;
+  display: inline-block;
+}
+.shiny-icon {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
