@@ -92,7 +92,7 @@ body {
   border: 2px solid #2c8fbd;
   border-radius: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-weight: bold;
+  font-weight: 500;
   z-index: 9999;
   width: auto;
   max-width: 200px;
