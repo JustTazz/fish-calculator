@@ -7,24 +7,24 @@ fetch("fish.json")
     fishData.forEach((fish, index) => {
       counts[index] = 0;
 
-      const fishNameNormalized = fish.nom
-        .toLowerCase()
-        .replace(/^shiny\s+/, "")
-        .replace(/ /g, "_");
-
       const btn = document.createElement("div");
       btn.classList.add("fish-button");
       btn.style.position = "relative";
 
+      const isFishShiny = isShiny(fish.nom);
+
       btn.innerHTML = `
         <div style="display: flex; gap: 10px;">
-          <img src="src/img/${fishNameNormalized}.png" alt="${
-        fish.nom
-      }" style="width: 32px; height: 32px; background-color: ${
-        fish.nom.toLowerCase().startsWith("shiny") ? "yellow" : "transparent"
-      }; border-radius: 20px;">
+          <img src="src/img/${getImageName(fish.nom)}.png" alt="${fish.nom}"
+            style="width: 32px; height: 32px; border-radius: 20px; background-color: ${
+              isFishShiny ? "gold" : "transparent"
+            };">
           <div>
-            <div class="fish-name">${fish.nom}</div>
+            <div class="fish-name" style="${
+              isFishShiny
+                ? "color: gold;text-shadow: 1px 1px 2px black; font-weight: bold;"
+                : ""
+            }">${fish.nom}</div>
             <div class="fish-stats">Golds: ${fish.golds} | XP: ${fish.xp}</div>
           </div>
         </div>
@@ -67,20 +67,80 @@ fetch("fish.json")
     console.error("Erreur chargement JSON:", err);
   });
 
+function isShiny(name) {
+  return name.toLowerCase().startsWith("shiny");
+}
+
+function getImageName(name) {
+  if (isShiny(name)) {
+    return name.toLowerCase().replace("shiny ", "").replace(/ /g, "_");
+  }
+  return name.toLowerCase().replace(/ /g, "_");
+}
+
 function updateResult(fishData) {
   let totalXP = 0;
   let totalGolds = 0;
+  let totalFish = 0;
+
+  const summaryLines = [];
 
   fishData.forEach((fish, index) => {
-    totalXP += fish.xp * counts[index];
-    totalGolds += fish.golds * counts[index];
+    const count = counts[index];
+    if (count > 0) {
+      const gold = fish.golds * count;
+      const xp = fish.xp * count;
+      totalGolds += gold;
+      totalXP += xp;
+      totalFish += count;
+
+      const isFishShiny = isShiny(fish.nom);
+      summaryLines.push(`
+        <div style="display: flex; justify-content: space-between; gap: 10px; margin: 4px 0; align-items: center;">
+          <span style="display: flex; align-items: center; gap: 6px;">
+            <img src="src/img/${getImageName(fish.nom)}.png" alt="${fish.nom}" 
+              style="width: 24px; height: 24px; border-radius: 20px; background-color: ${
+                isFishShiny ? "gold" : "transparent"
+              };">
+            <strong style="${
+              isFishShiny ? "color: gold; text-shadow: 1px 1px 2px black;" : ""
+            }">${fish.nom}</strong> x${count}
+          </span>
+          <span>
+            <img src="src/img/gold_icon.png" alt="Gold" style="width: 16px; height:text-shadow: 1px 1px 2px black; 16px; vertical-align: middle;">
+            ${gold} |
+            <img src="src/img/xp.svg" alt="XP" style="width: 16px; height: 16px;text-shadow: 1px 1px 2px black; vertical-align: middle;">
+            ${xp}
+          </span>
+        </div>
+      `);
+    }
   });
 
   const result = document.getElementById("result");
   result.innerHTML = `
-    <img src="src/img/xp.svg" alt="XP" style="width: 25px; height: 25px; vertical-align: middle;">
+    <img src="src/img/xp.svg" alt="XP" style="width: 20px; height: 20px; vertical-align: middle;">
     <span id="xp-text">${totalXP}</span> |
-    <img src="src/img/gold_icon.png" alt="Gold" style="width: 25px; height: 25px; vertical-align: middle;">
+    <img src="src/img/gold_icon.png" alt="Gold" style="width: 20px; height:  1px 1px 2px black; vertical-align: middle;">
     <span id="gold-text">${totalGolds}</span>
   `;
+
+  const summary = document.getElementById("summary");
+  if (totalFish > 0) {
+    summary.innerHTML = `
+      <h3>🎣J’ai pêché ${totalFish} poisson${totalFish > 1 ? "s" : ""} :</h3>
+      <p>J’ai gagné 
+        <img src="src/img/xp.svg" alt="XP" style="width: 20px; height: 20px ; vertical-align: middle;"> <strong>${totalXP}</strong> XP et 
+        <img src="src/img/gold_icon.png" alt="Gold" style="width: 20px; height: 20px; vertical-align: middle;"> <strong>${totalGolds}</strong> Golds avec ces poissons.
+      </p>
+      <div style="margin-top: 10px;">${summaryLines.join("")}</div>
+    `;
+  } else {
+    summary.innerHTML = "";
+  }
 }
+document.getElementById("scroll-to-summary").addEventListener("click", () => {
+  document.getElementById("summary-container").scrollIntoView({
+    behavior: "smooth",
+  });
+});
