@@ -128,10 +128,10 @@ function updateResult(fishData) {
   const summary = document.getElementById("summary");
   if (totalFish > 0) {
     summary.innerHTML = `
-      <h3>🎣J’ai pêché ${totalFish} poisson${totalFish > 1 ? "s" : ""} :</h3>
-      <p>J’ai gagné 
-        <img src="src/img/xp.svg" alt="XP" style="width: 20px; height: 20px ; vertical-align: middle;"> <strong>${totalXP}</strong> XP et 
-        <img src="src/img/gold_icon.png" alt="Gold" style="width: 20px; height: 20px; vertical-align: middle;"> <strong>${totalGolds}</strong> Golds avec ces poissons.
+      <h3>I caught ${totalFish}🐟${totalFish > 1 ? "" : ""} :</h3>
+      <p>I won 
+        <img src="src/img/xp.svg" alt="XP" style="width: 20px; height: 20px ; vertical-align: middle;"> <strong>${totalXP}</strong> and 
+        <img src="src/img/gold_icon.png" alt="Gold" style="width: 20px; height: 20px; vertical-align: middle;"> <strong>${totalGolds}</strong> 
       </p>
       <div style="margin-top: 10px;">${summaryLines.join("")}</div>
     `;
